@@ -1,9 +1,9 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Scanner;
 
 //retreive weather data from API - this backend logic will fetch the latest weather
@@ -19,7 +19,7 @@ public class WeatherApp1 {
     }
 
     // retrieves geographic coordinates for given location name
-    private static JSONArray getLocationData(String locationName) {
+    public static JSONArray getLocationData(String locationName) {
         // replace any whitespace in location name to + to adhere to API's request format
         locationName = locationName.replaceAll(" ", "+");
 
@@ -54,7 +54,7 @@ public class WeatherApp1 {
                 conn.disconnect();
 
                 // parse the JSON string into a JSON obj
-                JSONParser parser = new JSONparser();
+                JSONParser parser = new JSONParser();
                 JSONObject resultsJsonObj = (JSONObject) parser.parse(String.valueOf(resultJson));
 
                 // get the list of location data the API generated from the location name
@@ -65,6 +65,9 @@ public class WeatherApp1 {
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        // could not find location
+        return null;
     }
 
     private static HttpURLConnection fetchApiResponse(String urlString) {
