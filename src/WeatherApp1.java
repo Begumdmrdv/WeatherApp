@@ -15,6 +15,52 @@ public class WeatherApp1 {
         // get location coordinates using the geolocation API
         JSONArray locationData = getLocationData(locationName);
 
+        // extract latitude and longitude data
+        JSONObject location = (JSONObject) locationData.get(0);
+        double latitude = (double) location.get("latitude");
+        double longitude = (double) location.get("longitude");
+
+        // build API request URL with location coordinates
+        String urlString = "https://api.open-meteo.com/v1/forecast?" +
+            "latitude=" + latitude + "&longitude=" + longitude +
+            "&hourly=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=America%2FLos_Angeles";
+
+        try {
+            // call api and get response
+            HttpURLConnection conn = fetchApiResponse(urlString);
+
+            // check for response status
+            // 200 - means that the connection was a success
+            if(conn.getResponseCode() != 200) {
+                System.out.println("Error: Could not connect to API");
+                return null;
+            }
+
+            // store resulting json data
+            StringBuilder resultJson = new StringBuilder();
+            Scanner scanner = new Scanner(conn.getInputStream());
+            while(scanner.hasNext()) {
+                // read and store into the string builder
+                resultJson.append((scanner.nextLine()));
+            }
+
+            // close scanner
+            scanner.close();
+
+            // close url connection
+            conn.disconnect();
+
+            // parse through our data
+            JSONParser parser = new JSONParser();
+            JSONObject resultJsonObj = (JSONObject) parser.parse(String.valueOf(resultJson));
+
+            // retrieve hourly data
+            JSONObject hourly = (JSONObject) resultJsonObj.get("hourly");
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
