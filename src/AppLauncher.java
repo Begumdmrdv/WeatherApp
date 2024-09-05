@@ -6,7 +6,9 @@ public class AppLauncher {
             @Override
             public void run() {
                 // display our weather app gui
-                new WeatherApp().setVisible(true);
+                // new WeatherApp().setVisible(true);
+
+                System.out.println(WeatherApp1.getLocationData("Tokyo"));
 
             }
         });
