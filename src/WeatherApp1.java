@@ -15,6 +15,7 @@ public class WeatherApp1 {
         // get location coordinates using the geolocation API
         JSONArray locationData = getLocationData(locationName);
 
+        return null;
     }
 
     // retrieves geographic coordinates for given location name
