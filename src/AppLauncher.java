@@ -10,6 +10,8 @@ public class AppLauncher {
 
                 // System.out.println(WeatherApp1.getLocationData("Tokyo"));
 
+                // System.out.println(WeatherApp1.getCurrentTime());
+
             }
         });
     }
