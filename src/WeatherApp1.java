@@ -70,7 +70,7 @@ public class WeatherApp1 {
             double temperature = (double) temperatureData.get(index);
 
             // get weather code
-            JSONArray weathercode = (JSONArray) hourly.get("weathercode");
+            JSONArray weathercode = (JSONArray) hourly.get("weather_code");
             String weatherCondition = convertWeatherCode((long) weathercode.get(index));
 
             // get humidity
