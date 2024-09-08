@@ -148,6 +148,15 @@ public class WeatherApp1 {
     private static int findIndexOfCurrentTime(JSONArray timeList) {
         String currentTime = getCurrentTime();
 
+        // iterate through the time list and see which one matches our current time
+        for(int i = 0; i < timeList.size(); i++) {
+            String time = (String) timeList.get(i);
+            if(time.equalsIgnoreCase(currentTime)) {
+                // return the index
+                return i;
+            }
+        }
+
         return 0;
     }
 
