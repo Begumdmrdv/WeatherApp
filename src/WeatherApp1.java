@@ -4,6 +4,9 @@ import org.json.simple.parser.JSONParser;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
 
 //retreive weather data from API - this backend logic will fetch the latest weather
@@ -56,6 +59,11 @@ public class WeatherApp1 {
 
             // retrieve hourly data
             JSONObject hourly = (JSONObject) resultJsonObj.get("hourly");
+
+            // we want to get the current hour's data
+            // so we need to get the index of our current hour
+            JSONArray time = (JSONArray) hourly.get("time");
+            int index = findIndexOfCurrentTime(time);
 
         }catch(Exception e) {
             e.printStackTrace();
@@ -135,6 +143,26 @@ public class WeatherApp1 {
 
         // could not make connection
         return null;
+    }
+
+    private static int findIndexOfCurrentTime(JSONArray timeList) {
+        String currentTime = getCurrentTime();
+
+        return 0;
+    }
+
+    public static String getCurrentTime() {
+
+        // get current data and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // format date to be 2023-09-02T00:00 (this is how is read in the API)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH':00'");
+
+        // format and print the current data and time
+        String formattedDateTime = currentDateTime.format(formatter);
+
+        return formattedDateTime;
     }
 
 }
